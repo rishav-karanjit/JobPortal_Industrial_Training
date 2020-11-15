@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+Home
+{% endblock title %}
+{% block body %}
+{% for vacancy in vacancys %}
+  <div class="container bg-light">
+    <div class="m-4 p-4" style="min-height: 100px;border-style:solid none none none ;">
+      <a style="color:black">
+      <h1><p class="text-center">{{vacancy.title}}</p></h1>
+        <p class="text-center"><strong>{{vacancy.company}}</strong></p></a>
+        <p><strong>Job Category:</strong> {{vacancy.get_jobcategory_display}}</p>
+        <p><strong>Deadline:</strong> {{vacancy.deadline}}</p>
+        <p><strong>Description:</strong> {{vacancy.description|safe}}</p>
+        {% if request.user.is_jobseeker%}
+          <div class="text-right">
+          <a href="{% url 'ApplyVacancy' vacancy.id%}" class="btn btn-success">Apply</a>
+          </div>
+        {% else %}
+        {% endif %}
+    </div>
+  </div>
+{% endfor %}
+{% endblock body %}

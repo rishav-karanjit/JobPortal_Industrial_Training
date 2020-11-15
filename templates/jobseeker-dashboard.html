@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block Title %}
+Jobseeker Dashboard
+{% endblock Title %}
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-2 px-1 position-fixed">
+          <ul class="list-group">
+            <li class="list-group-item">                        
+            <div class="text-center">
+            {% if user.avatar %}
+                <img class="" src="{{user.avatar.url}}" width="150" height="100">           
+            {% else %}
+            {% endif %}
+            </div>
+            <p class="text-center" style="text-decoration: none; font-size: 25px; color:black;">{{user.first_name}} {{user.last_name}}</p></li>
+            <li class="list-group-item active"><a href="{% url 'Jobseeker_dashboard' %}" class="text-white">Profile Info</a></li>
+            <li class="list-group-item"><a href="{% url 'education-info' user.id %}" class="text-dark">Education Info</a></li>
+            <li class="list-group-item"><a href="{%url 'skillset'%}" class="text-dark">Skills</a></li>
+            <li class="list-group-item"><a href="{%url 'related-jobs'%}" class="text-dark">View Related Jobs</a></li>
+            <li class="list-group-item"><a href="{%url 'VacancyStatus'%}" class="text-dark">Vacancy Status</a></li>
+          </ul>
+        </div>
+        <div class="col offset-3" id="main">
+<h4 class="text-center">Profile Info</h4>
+
+<table class="table" id="vertical-1" cellpadding="3">
+    <tr>
+        <th style="font-size:20px">First Name:</th>
+        <td> {{user.first_name}} 
+    </tr>
+    <tr>
+        <th style="font-size:20px">Last Name:</th>
+        <td> {{user.last_name}}</td>
+    </tr>
+    {% for jobs in job %}
+    <tr>
+        <th style="font-size:20px">Date of birth:</th>
+        <td> {{jobs.dob}}</td>
+    </tr>
+    <tr>
+        <th style="font-size:20px">Gender:</th>
+        <td> {{jobs.get_gender_display}}</td>
+    </tr>
+    <tr>
+        <th style="font-size:20px">Resume:</th>
+        <td><a href="{{jobs.resume.url}}" class="btn btn-dark">Download</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'Jobseeker_update' user.id %}" class="btn btn-info my-4">Update Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock body %} 

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}
+My Vacancy
+{% endblock title %}
+{% block body %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-2 px-1 position-fixed">
+      <ul class="list-group">
+        <li class="list-group-item"><a href="{% url 'dashboard' user.id %}" class="text-dark">Update Profile</a></li>
+        <li class="list-group-item"><a href="{% url 'vacancy' %}" class="text-dark">Post Vacancy</a></li>
+        <li class="list-group-item active"><a href="{% url 'my_vacancy' %}" class="text-white">My Vacancy</a></li>
+        <li class="list-group-item"><a href="{%url 'applicants'%}" class="text-dark">Applicants</a></li>
+      </ul>
+    </div>
+    <div class="col offset-3" id="main">
+      <h2 class="text-center">My Vacancys</h2>
+      <table class="table" style="width:100%">
+        <tr class='text-center' style="font-size: 25px;">
+          <th>Title</th>
+          <th>Job category</th>
+          <th>Deadline</th>
+          <th></th>
+          <th></th>
+        </tr>
+      {% for vacancy in vacancys %}
+        <tr class='text-center'>
+          <td>{{vacancy.title}}</td>
+          <td>{{vacancy.get_jobcategory_display}}</td>
+          <td>{{vacancy.deadline}}</td>
+          <td class="btn btn-info mx-2 p-2"><a class="text-white" href="{% url 'update' vacancy.id %}">Update</td></a>
+          <td class="btn btn-danger mx-2 p-2"><a class="text-white" href="{% url 'delete' vacancy.id %}">Delete</td></a>
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock body %}

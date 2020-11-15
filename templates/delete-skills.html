@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Delete {{skill.skills}}
+{% endblock title %}
+{% block body %}
+<br>
+<br>
+<br>
+<div class="container">
+    <h2 class="font-weight-light text-center">Delete {{skill.skills}}?</h2>
+    <hr>
+</div>
+<div class="container p-4 mt-4 text-center">
+    <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form|crispy}}
+    <input type="submit" value="Delete" class="text-white text-center my-2 btn btn-danger">
+    <a href="{%url 'skillset'%}" class="btn btn-info">Cancel</a>
+    </form>
+    
+</div>
+{% endblock body %}

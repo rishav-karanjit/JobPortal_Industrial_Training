@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+Skills
+{% endblock title %}
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-2 px-1 position-fixed">
+          <ul class="list-group">
+            <li class="list-group-item">                        
+            <div class="text-center">
+            {% if user.avatar %}
+                <img class="" src="{{user.avatar.url}}" width="150" height="100">           
+            {% else %}
+            {% endif %}
+            </div>
+            <p class="text-center" style="text-decoration: none; font-size: 25px; color:black;">{{user.first_name}} {{user.last_name}}</p></li>
+            <li class="list-group-item"><a href="{% url 'Jobseeker_dashboard' %}" class="text-dark">Profile Info</a></li>
+            <li class="list-group-item"><a href="{% url 'education-info' user.id %}" class="text-dark">Education Info</a></li>
+            <li class="list-group-item active"><a href="{%url 'skillset'%}" class="text-white">Skills</a></li>
+            <li class="list-group-item"><a href="{%url 'related-jobs'%}" class="text-dark">View Related Jobs</a></li>
+            <li class="list-group-item"><a href="{%url 'VacancyStatus'%}" class="text-dark">Vacancy Status</a></li>
+          </ul>
+        </div>
+        <div class="col offset-3" id="main">
+            <h4>Jobseeker Skills</h4>
+            <table class="text-center">
+                {% for skill in skills %}
+                    <tr>
+                    <td>{{skill.skills}}</td>
+                    <td><a class="btn btn-xs btn-danger mx-5" href="{%url 'deleteskills' skill.id%}">X</a></td>
+                    </tr>
+       
+                {% endfor %}
+            </table>    
+            <a class="btn btn-info my-5" href="{% url 'addskills' user.id%}">Add Skills</a>
+        </div>
+{% endblock body %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}
+Education Info
+{% endblock title %}
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-2 px-1 position-fixed">
+          <ul class="list-group">
+            <li class="list-group-item">                        
+            <div class="text-center">
+            {% if user.avatar %}
+                <img class="" src="{{user.avatar.url}}" width="150" height="100">           
+            {% else %}
+            {% endif %}
+            </div>
+            <p class="text-center" style="text-decoration: none; font-size: 25px; color:black;">{{user.first_name}} {{user.last_name}}</p></li>
+            <li class="list-group-item"><a href="{% url 'Jobseeker_dashboard' %}" class="text-dark">Profile Info</a></li>
+            <li class="list-group-item active"><a href="{% url 'education-info' user.id %}" class="text-white">Education Info</a></li>
+            <li class="list-group-item"><a href="{%url 'skillset'%}" class="text-dark">Skills</a></li>
+            <li class="list-group-item"><a href="{%url 'related-jobs'%}" class="text-dark">View Related Jobs</a></li>
+            <li class="list-group-item"><a href="{%url 'VacancyStatus'%}" class="text-dark">Vacancy Status</a></li>
+          </ul>
+        </div>
+        <div class="col offset-3" id="main">
+        {% for education in educations %}
+            <table class="table borderless my-2 bg-light">
+            <tr>
+            <td width="75%"><h4>{{education.organization}}</h4></td>
+            <td>{{education.datefrom}}
+            {% if education.dateto %}
+                - {{education.dateto}}
+            {% else %}
+            {% endif %}
+            </td>
+            </tr>
+            {% if education.get_level_display %}
+                <tr><td><h6>{{education.get_level_display}}</h6></td></tr>
+            {% endif %}
+            {% if education.nameofcourse %}
+            <tr>
+            <td><h6>{{education.nameofcourse}}</h6></td>
+            {% endif %}
+            <td>
+                <a class="btn btn-info btn-xs" href="{% url 'edu-update-info' education.id%}">Update</a> <a class="btn btn-danger" href="{% url 'delete-edu-info' education.id%}">Delete</a>
+            </td>
+            </tr>
+            </table>
+        {% endfor %}
+        <div class="text-center">
+            <a class="btn btn-success my-5" href="{% url 'add-edu-info' %}">Add Education Info</a>
+        </div>
+        </div>
+
+        {% if messages %}
+            <div class='container'>
+            <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+            </ul>
+        {% else %}
+        {% endif %}
+{% endblock body %}

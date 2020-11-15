@@ -1,0 +1,88 @@
+{% load static %}
+<html>
+    <head>
+    <title>{% block title %}
+    
+    {% endblock title %}
+    </title>
+    <style>
+        .borderless tr td{
+            border : none;
+        }
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            background-color: #efefef;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}"> {% endcomment %}
+    {% comment %} <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> {% endcomment %}
+    <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+    <script defer src="{% static 'js/jquery.js' %}"></script>
+    <script defer src="{% static 'js/bootstrap.js' %}"></script>
+    </head>
+    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+{% comment %} nav-bar {% endcomment %}
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class='container'>
+        <a class="navbar-brand" href="{% url 'home' %}"><i class="fa fa-user"></i> Job portal</a>
+        <ul class="navbar-nav">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link text-white mx-4" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white mx-3" href="
+                {% if user.role == 1 %}
+                    {% url 'dashboard' user.id %}
+                {% else %}
+                    {% url 'Jobseeker_dashboard' %}
+                {% endif %}              
+                ">My Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="{%url 'logout'%}" class="text-white btn btn-danger rounded-0">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-light mr-5 disabled rounded-0"><b>Logged in as 
+                {% if user.first_name%}
+                {{user.first_name}} {{user.last_name}} 
+                {% else %}
+                {{user.email}}
+                {% endif %}
+                </b></a>
+            </li>            
+            {% else %}
+            <li class="nav-item">
+                    <a href="{%url 'login'%}" class="mr-4 text-white btn btn-info ">
+                    Login
+                    </a>
+                    <a href="{%url 'signup'%}" class="mr-4 text-white btn btn-success">Signup</a>
+            </li>
+            {% endif %}
+            </li>
+            <li class="nav-item">
+                <form class="form-inline my-lg-0" action="{%url 'search'%}" method="GET"> 
+                <input
+                    class="form-control search-box"
+                    type="Search"
+                    placeholder="Find Vacancy..."
+                    name="search_term"
+                    value="{{search_term}}"
+                >       
+                </form>
+            
+            </li>
+        </ul>
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock body %}
+</body>
+</html>

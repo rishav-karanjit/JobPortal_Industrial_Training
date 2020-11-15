@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+Employer Dashboard
+{% endblock title %}
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-2 px-1 position-fixed">
+          <ul class="list-group">
+            <li class="list-group-item active"><a href="{% url 'dashboard' user.id %}" class="text-white">Update Profile</a></li>
+            <li class="list-group-item"><a href="{% url 'vacancy' %}" class="text-dark">Post Vacancy</a></li>
+            <li class="list-group-item"><a href="{% url 'my_vacancy' %}" class="text-dark">My Vacancy</a></li>
+            <li class="list-group-item"><a href="{%url 'applicants'%}" class="text-dark">Applicants</a></li>
+          </ul>
+        </div>
+        <div class="col offset-3" id="main">
+          <h2 class="ml-5">Employee's Profile:</h2>
+          <div class="ml-5">
+            <form method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default bg-info">Save</button>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
